@@ -1,0 +1,151 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+			
+			var m_iMap = { width: 0, height: 0, color: "black" };
+			var m_iBox = { size: 100, difference: 10, max: 1000, color: "blue" };
+			var m_iMouse = { x: 0, y: 0 };
+			var m_iSpeedMain = 25;
+			var m_IntervalId = null;
+			var m_Canvas;
+
+			document.documentElement.style.overflowX = 'hidden';	 // Horizontal scrollbar will be hidden
+			document.documentElement.style.overflowY = 'hidden';     // Vertical scrollbar will be hidden
+			document.addEventListener("mousemove", mouseMove);
+
+			function initializeGame()
+			{
+				initializeCanvas();
+				initializeBox();
+				
+				setInterval("gameLoop();", m_iSpeedMain);
+			}
+
+			function initializeCanvas()
+			{
+				m_Canvas = document.getElementById("gameCanvas").getContext("2d");
+				m_iMap.width = m_Canvas.canvas.width = window.innerWidth - Math.floor(window.innerWidth / 75);
+				m_iMap.height = m_Canvas.canvas.height = window.innerHeight - Math.floor(window.innerHeight / 36);
+				paintRect(0, 0, m_iMap.width, m_iMap.height, m_iMap.color);
+			}
+
+			function initializeBox()
+			{
+				m_iBox.x = Math.floor(m_iMap.width / 2);
+				m_iBox.y = Math.floor(m_iMap.height / 2);
+			}
+
+			function paintRect(x, y, width, height, color)
+			{
+				m_Canvas.beginPath();
+				m_Canvas.rect(x, y, width, height);
+				m_Canvas.fillStyle = color;
+				m_Canvas.fill();
+				m_Canvas.lineWidth = 5;
+				m_Canvas.strokeStyle = getRandomColor(0, 255);
+				m_Canvas.stroke();
+			}
+
+			function gameLoop()
+			{
+				paintRect(m_iMouse.x - Math.floor(m_iBox.size / 2), m_iMouse.y - Math.floor(m_iBox.size / 2), m_iBox.size, m_iBox.size, getRandomColor(0, 255));
+			
+				m_iBox.size -= m_iBox.difference;
+				
+				if(m_iBox.size <= 0 || m_iBox.size >= m_iBox.max)
+					m_iBox.difference = -m_iBox.difference;
+			}
+			
+			function mouseMove(event)
+			{
+				m_iMouse.x = event.clientX;
+				m_iMouse.y = event.clientY;
+			}
+
+			// Returns random color between iMin and iMax.
+			function getRandomColor(iMin, iMax)
+			{
+				// creating a random number between iMin and iMax
+				var r = getRandomNumber(iMin, iMax);
+				var g = getRandomNumber(iMin, iMax);
+				var b = getRandomNumber(iMin, iMax);
+
+				// going from decimal to hex
+				var hexR = r.toString(16);
+				var hexG = g.toString(16);
+				var hexB = b.toString(16);
+
+				// making sure single character values are prepended with a "0"
+				if (hexR.length == 1)
+					hexR = "0" + hexR;
+
+				if (hexG.length == 1)
+					hexG = "0" + hexG;
+
+				if (hexB.length == 1)
+					hexB = "0" + hexB;
+
+				// creating the hex value by concatenatening the string values
+				var hexColor = "#" + hexR + hexG + hexB;
+				return hexColor.toUpperCase();
+			}
+
+			// Returns random number between iMin and iMax.
+			function getRandomNumber(iMin, iMax)
+			{
+				return Math.floor((Math.random() * (iMax - iMin)) + iMin);
+			}
+
+            // Returns random color between iMin and iMax.
+            function getRandomColor(iMin, iMax)
+            {
+                // creating a random number between iMin and iMax
+                var r = getRandomNumber(iMin, iMax);
+                var g = getRandomNumber(iMin, iMax);
+                var b = getRandomNumber(iMin, iMax);
+
+                // going from decimal to hex
+                var hexR = r.toString(16);
+                var hexG = g.toString(16);
+                var hexB = b.toString(16);
+
+                // making sure single character values are prepended with a "0"
+                if (hexR.length == 1)
+                    hexR = "0" + hexR;
+
+                if (hexG.length == 1)
+                    hexG = "0" + hexG;
+
+                if (hexB.length == 1)
+                    hexB = "0" + hexB;
+
+                // creating the hex value by concatenatening the string values
+                var hexColor = "#" + hexR + hexG + hexB;
+                return hexColor.toUpperCase();
+            }
+
+            // Returns random number between iMin and iMax.
+            function getRandomNumber(iMin, iMax)
+            {
+                return Math.floor((Math.random() * (iMax - iMin)) + iMin);
+            }
+        </script>
+        
+        <style>
+            #gameCanvas
+            {
+                border: 3px solid gray;
+            }
+        </style>
+    </head>
+    <body onload="initializeGame();">
+        <canvas id="gameCanvas"></canvas>
+    </body>
+</html>

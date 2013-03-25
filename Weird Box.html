@@ -12,6 +12,7 @@ and open the template in the editor.
 			var m_iMap = { width: 0, height: 0, color: "black" };
 			var m_iBox = { size: 100, difference: 10, max: 1000, color: "blue" };
 			var m_iMouse = { x: 0, y: 0 };
+			var m_bPaused = false;
 			var m_iSpeedMain = 25;
 			var m_IntervalId = null;
 			var m_Canvas;
@@ -27,7 +28,7 @@ and open the template in the editor.
 				initializeCanvas();
 				initializeBox();
 				
-				setInterval("gameLoop();", m_iSpeedMain);
+				m_IntervalId = setInterval("gameLoop();", m_iSpeedMain);
 			}
 
 			function initializeCanvas()
@@ -73,7 +74,19 @@ and open the template in the editor.
 			
 			function keyUp(event)
 			{
-				paintRect(0, 0, m_iMap.width, m_iMap.height, m_iMap.color);
+				if(event.keyCode == 32)
+				{
+					m_bPaused = !m_bPaused;
+					
+					if(m_bPaused)
+						clearInterval(m_IntervalId);
+					
+					else
+						m_IntervalId = setInterval("gameLoop();", m_iSpeedMain);
+				}
+				
+				else
+					paintRect(0, 0, m_iMap.width, m_iMap.height, m_iMap.color);
 			}
 
 			// Returns random color between iMin and iMax.

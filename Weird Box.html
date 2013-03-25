@@ -19,9 +19,11 @@ and open the template in the editor.
 			document.documentElement.style.overflowX = 'hidden';	 // Horizontal scrollbar will be hidden
 			document.documentElement.style.overflowY = 'hidden';     // Vertical scrollbar will be hidden
 			document.addEventListener("mousemove", mouseMove);
+			document.addEventListener("keyup", keyUp);
 
 			function initializeGame()
 			{
+				alert("Warning: Playing this game may cause epileptic seizures if you have epilepsy");
 				initializeCanvas();
 				initializeBox();
 				
@@ -67,6 +69,11 @@ and open the template in the editor.
 			{
 				m_iMouse.x = event.clientX;
 				m_iMouse.y = event.clientY;
+			}
+			
+			function keyUp(event)
+			{
+				paintRect(0, 0, m_iMap.width, m_iMap.height, m_iMap.color);
 			}
 
 			// Returns random color between iMin and iMax.

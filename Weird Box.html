@@ -33,6 +33,7 @@ and open the template in the editor.
 
 			function initializeCanvas()
 			{
+				document.getElementById("gameCanvas").focus();
 				m_Canvas = document.getElementById("gameCanvas").getContext("2d");
 				m_iMap.width = m_Canvas.canvas.width = window.innerWidth - Math.floor(window.innerWidth / 75);
 				m_iMap.height = m_Canvas.canvas.height = window.innerHeight - Math.floor(window.innerHeight / 36);

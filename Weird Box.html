@@ -83,6 +83,9 @@ and open the template in the editor.
 					
 					else
 						m_IntervalId = setInterval("gameLoop();", m_iSpeedMain);
+					
+					event.preventDefault();
+					return false;
 				}
 				
 				else
